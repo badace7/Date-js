@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date</title>
+</head>
+<body>
+    
+
+    <form action="#">
+
+
+    <fieldset>
+
+            <legend>Entrez votre date de naissance</legend><br><br>
+
+            <div>
+            <label for="year">année</label>
+            <select id="year" onchange="calcJour()">
+            </select>
+
+
+
+        
+            <label for="month">mois</label>
+            <select id="month" onchange="calcJour()">
+                <option value="0">janvier</option>
+                <option value="1">février</option>
+                <option value="2">mars</option>
+                <option value="3">avril</option>
+                <option value="4">mai</option>
+                <option value="5">juin</option>
+                <option value="6">juillet</option>
+                <option value="7">août</option>
+                <option value="8">septembre</option>
+                <option value="9">octobre</option>
+                <option value="10">novembre</option>
+                <option value="11">decembre</option>
+            </select>
+
+            <label for="day">jour</label>
+            <select id="day">
+            </select>
+
+        </div>
+
+
+    </fieldset>
+
+
+    <fieldset>
+
+        <legend>Sélectionnez l'unité</legend><br><br>
+
+        
+        <input name="unite" id="jo" type="radio" value="jou" checked>
+        <label>jour</label><br>
+        
+        
+        <input name="unite" id="mo" type="radio" value="moi">
+        <label>mois</label><br>
+        
+        <input name="unite" id="an" type="radio" value="anné">
+        <label>année</label><br>
+
+    </fieldset><br>
+
+
+    <input type="submit"name="submit" value="Calculer" onclick="calcInput()">
+
+    </form>
+
+
+
+
+    <script>
+
+        let tabAnnée;
+
+        function annee() {
+            let tabAnnee = [];
+            
+            for(i=0;i<121;i++) {
+                tabAnnee[i] = 1900 + i;
+            }
+            return tabAnnee;
+        }
+
+        tabAnnée = annee();
+
+        function optionAnnée() {
+            let select = document.getElementById("year");
+
+            tabAnnée.forEach(function(element, key) {
+                select[key] = new Option(element, element);
+            });
+
+        }
+
+        optionAnnée();
+
+
+        function calcInput() {
+            let year = document.getElementById('year').value;
+            let month = document.getElementById('month').value;
+            let day = document.getElementById('day').value;
+            let date1;
+            let date2;
+            let diff;
+
+            day = parseInt(day);
+            date1 = new Date();
+            date2 = new Date(year, month, day);
+
+            diff = date1.getTime() - date2.getTime();
+
+
+            if(document.getElementById('jo').checked) {
+                alert('Vous êtes née il y a : ' + Math.round(diff / (1000*60*60*24)) + ' jours');
+            } else if(document.getElementById('mo').checked) {
+                alert('Vous êtes née il y a : ' + parseInt(diff / (1000*60*60*24*30)) + ' mois');
+            } else if(document.getElementById('an').checked) {
+                alert('Vous êtes née il y a : ' + parseInt(diff / (1000*60*60*24*365)) + ' ans');
+            }
+
+            
+            
+        }
+
+
+        function calcJour() {
+            let tabJour = [];
+            let select = document.getElementById("day");
+            let annee = document.getElementById("year").value;
+            let mois = parseInt(document.getElementById("month").value);
+            let nbrJrs = new Date(annee,mois,0).getDate();
+
+            
+            select.innerHTML = "";
+            for(i=1;i<=nbrJrs;i++) {
+                tabJour[i] = i;
+                tabJour.forEach(function(element, key) {
+                select[key] = new Option(element, element);
+            });
+            }
+
+           
+
+
+
+            
+
+
+        }
+
+        
+        
+
+
+
+
+    </script>
+
+
+
+
+</body>
+</html>
